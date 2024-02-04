@@ -1,6 +1,6 @@
 namespace _BattleTanks.Scripts.Interfaces
 {
-    public interface IDamaging
+    public interface IDamagable
     {
         public void TakeDamage(int damage);
     }
