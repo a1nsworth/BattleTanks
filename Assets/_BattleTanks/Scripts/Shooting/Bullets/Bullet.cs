@@ -1,10 +1,12 @@
+using System;
 using _BattleTanks.Scripts.Interfaces;
+using _BattleTanks.Scripts.Interfaces.Bullet;
 using UnityEngine;
 
 namespace _BattleTanks.Scripts.Shooting.Bullets
 {
     [RequireComponent(typeof(Rigidbody2D))]
-    public abstract class Bullet : MonoBehaviour
+    public abstract class Bullet : MonoBehaviour, IBullet
     {
         #region UnityEditorVariables
 
@@ -14,26 +16,20 @@ namespace _BattleTanks.Scripts.Shooting.Bullets
 
         #region Components
 
-        private Rigidbody2D _rigidbody2D;
+        public Rigidbody2D Rigidbody2D { get; private set; }
 
         #endregion
 
-        private void Start()
+        private void Awake()
         {
-            _rigidbody2D = GetComponent<Rigidbody2D>();
+            Rigidbody2D = GetComponent<Rigidbody2D>();
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
-        {
-            var damaging = other.gameObject.GetComponent<IDamaging>();
-            damaging?.TakeDamage(Damage);
-
-            Destroy(gameObject);
-        }
+        protected abstract void OnTriggerEnter2D(Collider2D other);
 
         public virtual void Launch(Vector3 dir, float speed)
         {
-            _rigidbody2D.velocity = dir * speed;
+            Rigidbody2D.velocity = dir * speed;
         }
     }
 }

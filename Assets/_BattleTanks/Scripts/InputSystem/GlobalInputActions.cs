@@ -46,6 +46,15 @@ namespace _BattleTanks.Scripts.InputSystem
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Shooting"",
+                    ""type"": ""Button"",
+                    ""id"": ""cbcd7bf3-1fa3-4048-91a2-8f6c3c5b8e85"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -114,6 +123,17 @@ namespace _BattleTanks.Scripts.InputSystem
                     ""action"": ""Rotation"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc5aed6b-032d-4c9c-a268-8adf679c3054"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Shooting"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -141,6 +161,7 @@ namespace _BattleTanks.Scripts.InputSystem
             m_Tank = asset.FindActionMap("Tank", throwIfNotFound: true);
             m_Tank_Movement = m_Tank.FindAction("Movement", throwIfNotFound: true);
             m_Tank_Rotation = m_Tank.FindAction("Rotation", throwIfNotFound: true);
+            m_Tank_Shooting = m_Tank.FindAction("Shooting", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -204,12 +225,14 @@ namespace _BattleTanks.Scripts.InputSystem
         private List<ITankActions> m_TankActionsCallbackInterfaces = new List<ITankActions>();
         private readonly InputAction m_Tank_Movement;
         private readonly InputAction m_Tank_Rotation;
+        private readonly InputAction m_Tank_Shooting;
         public struct TankActions
         {
             private @GlobalInputActions m_Wrapper;
             public TankActions(@GlobalInputActions wrapper) { m_Wrapper = wrapper; }
             public InputAction @Movement => m_Wrapper.m_Tank_Movement;
             public InputAction @Rotation => m_Wrapper.m_Tank_Rotation;
+            public InputAction @Shooting => m_Wrapper.m_Tank_Shooting;
             public InputActionMap Get() { return m_Wrapper.m_Tank; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -225,6 +248,9 @@ namespace _BattleTanks.Scripts.InputSystem
                 @Rotation.started += instance.OnRotation;
                 @Rotation.performed += instance.OnRotation;
                 @Rotation.canceled += instance.OnRotation;
+                @Shooting.started += instance.OnShooting;
+                @Shooting.performed += instance.OnShooting;
+                @Shooting.canceled += instance.OnShooting;
             }
 
             private void UnregisterCallbacks(ITankActions instance)
@@ -235,6 +261,9 @@ namespace _BattleTanks.Scripts.InputSystem
                 @Rotation.started -= instance.OnRotation;
                 @Rotation.performed -= instance.OnRotation;
                 @Rotation.canceled -= instance.OnRotation;
+                @Shooting.started -= instance.OnShooting;
+                @Shooting.performed -= instance.OnShooting;
+                @Shooting.canceled -= instance.OnShooting;
             }
 
             public void RemoveCallbacks(ITankActions instance)
@@ -265,6 +294,7 @@ namespace _BattleTanks.Scripts.InputSystem
         {
             void OnMovement(InputAction.CallbackContext context);
             void OnRotation(InputAction.CallbackContext context);
+            void OnShooting(InputAction.CallbackContext context);
         }
     }
 }
