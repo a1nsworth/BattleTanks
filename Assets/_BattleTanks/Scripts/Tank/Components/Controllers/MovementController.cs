@@ -66,8 +66,8 @@ namespace _BattleTanks.Scripts.Tank.Components.Controllers
         }
 
         #endregion
-        
-        public void Update(float deltaTime)
+
+        void IMovementController.Update(float deltaTime)
         {
             _movementDirectionProviderAndUpdater.Update();
             _rotationDirectionProviderAndUpdater.Update();
