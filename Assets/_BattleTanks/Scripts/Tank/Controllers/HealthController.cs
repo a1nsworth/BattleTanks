@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace _BattleTanks.Scripts.Tank.Components
 {
-    public class HealthComponent : MonoBehaviour, IDamagable
+    public class HealthController : MonoBehaviour, IDamagable
     {
         public bool IsDie => Health == 0 && Life == 0;
 

@@ -5,18 +5,18 @@ using UnityEngine;
 namespace _BattleTanks.Scripts.Tank
 {
     [RequireComponent(typeof(IMovementController))]
-    [RequireComponent(typeof(HealthComponent))]
+    [RequireComponent(typeof(HealthController))]
     public class Tank : MonoBehaviour
     {
         private IMovementController _movementController;
-        private HealthComponent _healthComponent;
+        private HealthController _healthController;
 
         private void Start()
         {
             _movementController = GetComponent<IMovementController>();
-            _healthComponent = GetComponent<HealthComponent>();
+            _healthController = GetComponent<HealthController>();
 
-            _healthComponent.Die += OnDieHandler;
+            _healthController.Die += OnDieHandler;
         }
 
         private void Update()
@@ -26,12 +26,12 @@ namespace _BattleTanks.Scripts.Tank
 
         private void OnDestroy()
         {
-            _healthComponent.Die -= OnDieHandler;
+            _healthController.Die -= OnDieHandler;
         }
 
         private void OnDieHandler()
         {
-            Destroy(this);
+            Destroy(gameObject);
         }
     }
 }
