@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_BattleTanks/Scenes/MainMenuScene.unity
+    guid: 38cb06e9d0404b04fa56fc988bf68c73
+  - enabled: 1
+    path: Assets/_BattleTanks/Scenes/ServersMenuScene.unity
+    guid: 6a45480b5ca09334ba1f6fc2db1e092c
+  - enabled: 1
     path: Assets/_BattleTanks/Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   m_configObjects: {}
